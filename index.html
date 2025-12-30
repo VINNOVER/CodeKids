@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeKids - Apprends à coder en t'amusant !</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6a5af9;
+            --secondary-color: #d66efd;
+            --accent-color: #ff9a3c;
+            --light-color: #f8f9ff;
+            --dark-color: #2a2d43;
+            --success-color: #4cd964;
+            --warning-color: #ffcc00;
+            --danger-color: #ff6b6b;
+            --font-primary: 'Comic Neue', cursive;
+            --font-secondary: 'Nunito', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-secondary);
+            background: linear-gradient(rgba(245, 247, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                        url('https://images.unsplash.com/photo-1536148935331-408321395b31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--dark-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: var(--font-primary);
+        }
+        
+        /* Header avec effet de bouncing */
+        header {
+            background: linear-gradient(90deg, rgba(106, 90, 249, 0.95), rgba(214, 110, 253, 0.95));
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            animation: headerBounce 0.5s ease-out;
+        }
+        
+        @keyframes headerBounce {
+            0% { transform: translateY(-100%); }
+            60% { transform: translateY(10px); }
+            80% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo i {
+            color: var(--accent-color);
+            font-size: 2.2rem;
+            animation: logoBounce 2s infinite;
+        }
+        
+        @keyframes logoBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        /* Navigation avec effets de bouncing */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav li {
+            animation: navItemBounce 0.8s ease-out backwards;
+        }
+        
+        nav li:nth-child(1) { animation-delay: 0.1s; }
+        nav li:nth-child(2) { animation-delay: 0.2s; }
+        nav li:nth-child(3) { animation-delay: 0.3s; }
+        nav li:nth-child(4) { animation-delay: 0.4s; }
+        nav li:nth-child(5) { animation-delay: 0.5s; }
+        nav li:nth-child(6) { animation-delay: 0.6s; }
+        
+        @keyframes navItemBounce {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            50% {
+                transform: translateY(5px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-family: var(--font-secondary);
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: left 0.3s ease;
+            border-radius: 20px;
+        }
+        
+        nav a:hover::before {
+            left: 0;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav a:active {
+            transform: translateY(0);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Hero Section avec image de fond d'enfant */
+        .hero {
+            padding: 6rem 2rem;
+            text-align: center;
+            background: rgb(14, 51, 86);
+            backdrop-filter: blur(5px);
+            max-width: 1200px;
+            margin: 2rem auto;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: heroAppear 0.8s ease-out;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80') no-repeat center right;
+            background-size: cover;
+            opacity: 0.15;
+            z-index: 0;
+        }
+        
+        @keyframes heroAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3.2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: titleBounce 1s ease-out;
+        }
+        
+        @keyframes titleBounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--dark-color);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.2rem 3rem;
+            font-size: 1.4rem;
+            font-weight: bold;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(106, 90, 249, 0.4);
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-primary);
+            position: relative;
+            overflow: hidden;
+            animation: ctaBounce 2s infinite;
+        }
+        
+        @keyframes ctaBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(106, 90, 249, 0.5);
+            animation: none;
+        }
+        
+        .cta-button:active {
+            transform: translateY(0);
+        }
+        
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s;
+        }
+        
+        .cta-button:hover::after {
+            left: 100%;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin-bottom: 3.5rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 10%;
+            width: 80%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+            border-radius: 2px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: cardFloat 3s ease-in-out infinite;
+            animation-delay: calc(var(--i) * 0.1s);
+        }
+        
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 25px 40px rgba(0, 0, 0, 0.12);
+            animation: none;
+        }
+        
+        .feature-icon {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.8rem;
+            display: inline-block;
+            animation: iconBounce 2s infinite;
+        }
+        
+        @keyframes iconBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .feature-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+            color: var(--dark-color);
+        }
+        
+        .feature-card p {
+            color: #666;
+            font-size: 1.15rem;
+            line-height: 1.6;
+        }
+        
+        /* Coding Area */
+        .coding-area {
+            padding: 5rem 2rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            max-width: 1200px;
+            margin: 3rem auto;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideInUp 0.8s ease-out;
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .coding-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+        
+        .code-editor {
+            background-color: #1e1e1e;
+            border-radius: 15px;
+            padding: 1.8rem;
+            font-family: 'Courier New', monospace;
+            min-height: 320px;
+            color: white;
+            overflow: auto;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+            border: 2px solid #333;
+            animation: editorGlow 3s infinite;
+        }
+        
+        @keyframes editorGlow {
+            0%, 100% { box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5), 0 0 0 rgba(106, 90, 249, 0); }
+            50% { box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(106, 90, 249, 0.3); }
+        }
+        
+        .code-line {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .line-number {
+            color: #858585;
+            width: 30px;
+            margin-right: 15px;
+            text-align: right;
+            user-select: none;
+        }
+        
+        .code-keyword {
+            color: #569cd6;
+        }
+        
+        .code-string {
+            color: #ce9178;
+        }
+        
+        .code-function {
+            color: #dcdcaa;
+        }
+        
+        .code-var {
+            color: #9cdcfe;
+        }
+        
+        .code-comment {
+            color: #6a9955;
+        }
+        
+        .code-blocks-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .code-blocks {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            justify-content: center;
+        }
+        
+        .code-block {
+            background: linear-gradient(145deg, #f0f2ff, #ffffff);
+            border-radius: 15px;
+            padding: 1.5rem;
+            cursor: move;
+            font-weight: bold;
+            color: var(--primary-color);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            user-select: none;
+            min-width: 160px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            animation: blockPulse 2s infinite;
+        }
+        
+        @keyframes blockPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+        
+        .code-block i {
+            font-size: 1.8rem;
+        }
+        
+        .code-block:hover {
+            transform: scale(1.08) translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.12);
+            animation: none;
+        }
+        
+        .code-block:active {
+            transform: scale(1) translateY(0);
+        }
+        
+        .run-button {
+            background: linear-gradient(45deg, var(--success-color), #3ac253);
+            color: white;
+            border: none;
+            padding: 1.2rem 3rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 1.5rem auto;
+            display: block;
+            transition: all 0.3s ease;
+            font-family: var(--font-primary);
+            box-shadow: 0 8px 20px rgba(76, 217, 100, 0.4);
+            animation: buttonBounce 3s infinite;
+        }
+        
+        @keyframes buttonBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+        
+        .run-button:hover {
+            background: linear-gradient(45deg, #3ac253, var(--success-color));
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(76, 217, 100, 0.5);
+            animation: none;
+        }
+        
+        .run-button:disabled {
+            background: linear-gradient(45deg, #cccccc, #aaaaaa);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: none;
+        }
+        
+        .output {
+            background-color: rgba(240, 240, 240, 0.9);
+            border-radius: 15px;
+            padding: 1.8rem;
+            min-height: 220px;
+            font-family: var(--font-primary);
+            font-size: 1.2rem;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+            border: 2px solid #e0e0e0;
+        }
+        
+        .output h3 {
+            margin-bottom: 1.2rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        #animationArea {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+            min-height: 140px;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Characters Section */
+        .characters {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .character-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: cardFloat 4s ease-in-out infinite;
+            animation-delay: calc(var(--i) * 0.2s);
+        }
+        
+        .character-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 25px 40px rgba(0, 0, 0, 0.15);
+            animation: none;
+        }
+        
+        .character-img {
+            height: 240px;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 6rem;
+            background: linear-gradient(145deg, var(--light-color), #e6e9ff);
+        }
+        
+        .character-info {
+            padding: 2rem;
+        }
+        
+        .character-info h3 {
+            font-size: 1.7rem;
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+        }
+        
+        /* Progress Section */
+        .progress-section {
+            padding: 5rem 2rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            max-width: 1200px;
+            margin: 3rem auto;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .badges-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+        
+        .badge {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            padding: 1.2rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s ease;
+            animation: badgeSpin 20s linear infinite;
+        }
+        
+        @keyframes badgeSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .badge:hover {
+            animation: badgeHover 1s ease infinite;
+        }
+        
+        @keyframes badgeHover {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+        }
+        
+        .badge i {
+            font-size: 3rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .badge.unlocked {
+            background: linear-gradient(145deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        .badge.locked {
+            background: linear-gradient(145deg, #cccccc, #aaaaaa);
+            opacity: 0.7;
+            animation: badgeLocked 2s ease-in-out infinite;
+        }
+        
+        @keyframes badgeLocked {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Footer */
+        footer {
+            background-color: rgba(42, 45, 67, 0.95);
+            color: white;
+            padding: 4rem 2rem 2rem;
+            margin-top: 6rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.8rem;
+            color: var(--accent-color);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section li {
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .footer-section li:hover {
+            transform: translateX(5px);
+        }
+        
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-section a:hover {
+            color: var(--accent-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+        }
+        
+        .age-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--accent-color), #ff7b1c);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            font-weight: bold;
+            border-radius: 20px;
+            margin-top: 0.8rem;
+            box-shadow: 0 5px 15px rgba(255, 154, 60, 0.3);
+            animation: ageBounce 3s infinite;
+        }
+        
+        @keyframes ageBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .dragging {
+            opacity: 0.5;
+            transform: scale(0.95);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero::before {
+                width: 250px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.3rem;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero::before {
+                width: 200px;
+                opacity: 0.1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 0.5rem 0;
+            }
+            
+            nav {
+                width: auto;
+            }
+            
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                background-color: rgba(106, 90, 249, 0.98);
+                position: absolute;
+                top: 100%;
+                left: 0;
+                padding: 1rem 0;
+                border-radius: 0 0 20px 20px;
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+                backdrop-filter: blur(10px);
+                z-index: 100;
+            }
+            
+            nav ul.active {
+                display: flex;
+                animation: slideDown 0.3s ease-out;
+            }
+            
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            nav li {
+                width: 100%;
+                padding: 0.5rem 0;
+            }
+            
+            nav a {
+                display: block;
+                padding: 1rem;
+                border-radius: 0;
+                font-size: 1.2rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: static;
+            }
+            
+            .hero {
+                padding: 4rem 1.5rem;
+                margin: 1rem auto;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+                margin-bottom: 2.5rem;
+            }
+            
+            .hero::before {
+                display: none;
+            }
+            
+            .features, .characters, .coding-area, .progress-section {
+                padding: 4rem 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+                margin-bottom: 3rem;
+            }
+            
+            .code-blocks {
+                justify-content: center;
+            }
+            
+            .code-block {
+                min-width: 140px;
+                padding: 1.2rem;
+            }
+            
+            .cta-button, .run-button {
+                padding: 1rem 2.5rem;
+                font-size: 1.2rem;
+            }
+            
+            .badge {
+                width: 120px;
+                height: 120px;
+                font-size: 0.9rem;
+            }
+            
+            .badge i {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.9rem;
+            }
+            
+            .hero {
+                padding: 3rem 1rem;
+            }
+            
+            .feature-card, .character-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .code-block {
+                min-width: 130px;
+                padding: 1rem;
+                font-size: 0.95rem;
+            }
+            
+            .badge {
+                width: 110px;
+                height: 110px;
+                font-size: 0.85rem;
+            }
+            
+            .badge i {
+                font-size: 2.2rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+        
+        /* Animations générales */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .bounce {
+            animation: bounce 1s ease infinite;
+        }
+        
+        /* Game Canvas */
+        #gameCanvas {
+            border: 3px solid var(--primary-color);
+            border-radius: 12px;
+            background-color: #f8f9ff;
+            display: block;
+            margin: 1.5rem auto;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .canvas-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .game-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+        
+        .game-btn {
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-primary);
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: buttonBounce 3s infinite;
+        }
+        
+        .game-btn.play {
+            background: linear-gradient(45deg, var(--success-color), #3ac253);
+            color: white;
+        }
+        
+        .game-btn.reset {
+            background: linear-gradient(45deg, var(--danger-color), #ff5252);
+            color: white;
+        }
+        
+        .game-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            animation: none;
+        }
+        
+        .game-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Instructions */
+        .instructions {
+            background: linear-gradient(145deg, #e6f7ff, #d9f0ff);
+            border-radius: 15px;
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+            border-left: 6px solid var(--primary-color);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .instructions h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.3rem;
+        }
+        
+        .instructions p {
+            margin-bottom: 0.6rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .instructions p::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+        
+        /* Achievement Notification */
+        .achievement-notification {
+            position: fixed;
+            top: 120px;
+            right: 30px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(106, 90, 249, 0.4);
+            z-index: 1000;
+            display: none;
+            max-width: 320px;
+            animation: slideInRight 0.5s ease-out, notificationBounce 0.5s ease-out 0.5s;
+            border-left: 5px solid var(--accent-color);
+            backdrop-filter: blur(10px);
+        }
+        
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes notificationBounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-10px); }
+        }
+        
+        .achievement-notification h4 {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.3rem;
+        }
+        
+        .achievement-notification i {
+            color: var(--warning-color);
+            font-size: 1.5rem;
+            animation: trophySpin 2s infinite;
+        }
+        
+        @keyframes trophySpin {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(-15deg); }
+            75% { transform: rotate(15deg); }
+            100% { transform: rotate(0deg); }
+        }
+        
+        /* Effet de particules pour le fond */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            background: var(--primary-color);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: particleFloat linear infinite;
+        }
+        
+        @keyframes particleFloat {
+            to {
+                transform: translateY(-100px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Effet de particules de fond -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- En-tête du site -->
+    <header>
+        <div class="header-container">
+            <a href="#accueil" class="logo">
+                <i class="fas fa-laptop-code"></i>
+                <span>CodeKids</span>
+            </a>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="#accueil" class="active">Accueil</a></li>
+                    <li><a href="#activites">Activités</a></li>
+                    <li><a href="#code">Je code</a></li>
+                    <li><a href="#personnages">Personnages</a></li>
+                    <li><a href="#progres">Mes progrès</a></li>
+                    <li><a href="#parents">Parents</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Section héro -->
+    <section class="hero" id="accueil">
+        <div class="hero-content">
+            <h1>Apprends à coder en t'amusant !</h1>
+            <p style="color: var(--light-color);">Découvre la programmation avec des jeux interactifs, des défis amusants et des personnages colorés. Parfait pour les enfants de 6 à 12 ans !</p>
+            <a href="#code" class="cta-button">Commencer l'aventure <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- Section fonctionnalités -->
+    <section class="features" id="activites">
+        <h2 class="section-title">Ce que tu vas apprendre</h2>
+        <div class="features-grid">
+            <div class="feature-card" style="--i: 0">
+                <div class="feature-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3>Programmation visuelle</h3>
+                <p>Apprends les bases du code en assemblant des blocs colorés comme des legos.</p>
+            </div>
+            <div class="feature-card" style="--i: 1">
+                <div class="feature-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3>Crée tes animations</h3>
+                <p>Donne vie à des personnages en écrivant tes premières lignes de code.</p>
+            </div>
+            <div class="feature-card" style="--i: 2">
+                <div class="feature-icon">
+                    <i class="fas fa-puzzle-piece"></i>
+                </div>
+                <h3>Résous des énigmes</h3>
+                <p>Développe ta logique en résolvant des défis de programmation amusants.</p>
+            </div>
+            <div class="feature-card" style="--i: 3">
+                <div class="feature-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h3>Gagne des récompenses</h3>
+                <p>Débloque des badges et des trophées à chaque nouveau concept maîtrisé.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Zone de codage interactive -->
+    <section class="coding-area" id="code">
+        <h2 class="section-title">Essaye de coder !</h2>
+        <div class="coding-container">
+            <div class="instructions">
+                <h4><i class="fas fa-info-circle"></i> Instructions</h4>
+                <p>1. Déplace les blocs de code dans la zone de programme</p>
+                <p>2. Clique sur "Exécuter le programme" pour voir le résultat</p>
+                <p>3. Utilise le bouton "Effacer" pour recommencer</p>
+            </div>
+            
+            <div class="code-blocks-container">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem; font-size: 1.5rem;">
+                    <i class="fas fa-cubes"></i> Blocs de code disponibles :
+                </h3>
+                <div class="code-blocks">
+                    <div class="code-block" draggable="true" data-code="dire('Bonjour !')">
+                        <i class="fas fa-comment"></i>
+                        <span>Dire Bonjour</span>
+                    </div>
+                    <div class="code-block" draggable="true" data-code="avancer(100)">
+                        <i class="fas fa-arrow-right"></i>
+                        <span>Avancer</span>
+                    </div>
+                    <div class="code-block" draggable="true" data-code="tourner(90)">
+                        <i class="fas fa-redo"></i>
+                        <span>Tourner</span>
+                    </div>
+                    <div class="code-block" draggable="true" data-code="changerCouleur('rouge')">
+                        <i class="fas fa-palette"></i>
+                        <span>Changer couleur</span>
+                    </div>
+                    <div class="code-block" draggable="true" data-code="repetir(4)">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Répéter 4 fois</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-editor" id="codeEditor">
+                <div class="code-line">
+                    <span class="line-number">1</span>
+                    <span class="code-keyword">programme</span> <span class="code-function">monPremierCode</span>() {
+                </div>
+                <div class="code-line">
+                    <span class="line-number">2</span>
+                    <span class="code-comment">  // Déplace des blocs ici pour créer ton code</span>
+                </div>
+                <div class="code-line" id="codeLines">
+                    <span class="line-number">3</span>
+                    <div id="droppableArea" style="min-height: 100px; display: block; padding: 15px; border: 3px dashed #555; border-radius: 8px; margin-left: 15px; background: rgba(255,255,255,0.05);">
+                        <p style="color: #858585; text-align: center; margin: 30px 0; font-style: italic;">Dépose les blocs ici</p>
+                    </div>
+                </div>
+                <div class="code-line">
+                    <span class="line-number">4</span>
+                    }
+                </div>
+            </div>
+            
+            <div class="game-controls">
+                <button class="run-button" id="runButton">
+                    <i class="fas fa-play"></i> Exécuter le programme
+                </button>
+                <button class="game-btn reset" id="resetButton">
+                    <i class="fas fa-trash"></i> Effacer
+                </button>
+            </div>
+            
+            <div class="canvas-container">
+                <canvas id="gameCanvas" width="500" height="300"></canvas>
+            </div>
+            
+            <div class="output" id="output">
+                <h3><i class="fas fa-terminal"></i> Console de sortie :</h3>
+                <div id="outputText">Le résultat de ton programme s'affichera ici.</div>
+                <div id="animationArea"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section personnages -->
+    <section class="characters" id="personnages">
+        <h2 class="section-title">Nos personnages codeurs</h2>
+        <div class="characters-grid">
+            <div class="character-card" style="--i: 0">
+                <div class="character-img" style="background: linear-gradient(145deg, #ffd6e7, #ffc2dc);">
+                    <i class="fas fa-robot bounce" style="color: #ff6b9d; font-size: 7rem;"></i>
+                </div>
+                <div class="character-info">
+                    <h3>Robo</h3>
+                    <p>Robo adore les énigmes logiques et t'aidera à comprendre les boucles et les conditions.</p>
+                    <div class="age-badge">7-9 ans</div>
+                </div>
+            </div>
+            <div class="character-card" style="--i: 1">
+                <div class="character-img" style="background: linear-gradient(145deg, #d6f5ff, #c2eeff);">
+                    <i class="fas fa-cat floating" style="color: #4da6ff; font-size: 7rem;"></i>
+                </div>
+                <div class="character-info">
+                    <h3>CodeChat</h3>
+                    <p>CodeChat est expert en animations et te montrera comment créer des dessins avec du code.</p>
+                    <div class="age-badge">6-8 ans</div>
+                </div>
+            </div>
+            <div class="character-card" style="--i: 2">
+                <div class="character-img" style="background: linear-gradient(145deg, #e2ffd6, #d0ffc2);">
+                    <i class="fas fa-dragon pulse" style="color: #5cd63c; font-size: 7rem;"></i>
+                </div>
+                <div class="character-info">
+                    <h3>DragonByte</h3>
+                    <p>DragonByte maîtrise les jeux vidéo et t'apprendra à créer tes premiers petits jeux.</p>
+                    <div class="age-badge">9-12 ans</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section progrès -->
+    <section class="progress-section" id="progres">
+        <h2 class="section-title">Mes progrès</h2>
+        <p style="text-align: center; font-size: 1.3rem; margin-bottom: 2.5rem; color: #555;">
+            Débloque des badges en complétant les défis de codage !
+        </p>
+        
+        <div class="badges-container">
+            <div class="badge unlocked" id="badge1">
+                <i class="fas fa-star"></i>
+                <span>Premier programme</span>
+            </div>
+            <div class="badge unlocked" id="badge2">
+                <i class="fas fa-shapes"></i>
+                <span>Dessin géométrique</span>
+            </div>
+            <div class="badge locked" id="badge3">
+                <i class="fas fa-infinity"></i>
+                <span>Maître des boucles</span>
+            </div>
+            <div class="badge locked" id="badge4">
+                <i class="fas fa-robot"></i>
+                <span>Animation réussie</span>
+            </div>
+            <div class="badge locked" id="badge5">
+                <i class="fas fa-gamepad"></i>
+                <span>Créateur de jeux</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Notification d'accomplissement -->
+    <div class="achievement-notification" id="achievementNotification">
+        <h4><i class="fas fa-trophy"></i> Badge débloqué !</h4>
+        <p id="achievementText">Tu as créé ton premier programme !</p>
+    </div>
+
+    <!-- Pied de page -->
+    <footer id="parents">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>CodeKids</h3>
+                <p style="line-height: 1.8;">Une plateforme sécurisée et éducative pour initier les enfants au monde de la programmation de manière ludique et créative.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Pour les parents</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-shield-alt"></i> Sécurité et confidentialité</a></li>
+                    <li><a href="#"><i class="fas fa-book"></i> Guide parental</a></li>
+                    <li><a href="#"><i class="fas fa-chart-line"></i> Progression pédagogique</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-envelope"></i> contact@codekids.fr</a></li>
+                    <li><a href="#"><i class="fas fa-phone"></i> 01 23 45 67 89</a></li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Paris, France</a></li>
+                    <li><a href="#"><i class="fas fa-thumbs-up"></i> Suis-nous sur les réseaux</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 CodeKids. Tous droits réservés. Conçu avec <i class="fas fa-heart" style="color: #ff6b9d;"></i> pour les enfants.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Variables globales
+        let draggedBlock = null;
+        let programCode = [];
+        let executedCount = 0;
+        let turtleX = 250, turtleY = 150;
+        let turtleAngle = 0;
+        let turtleColor = '#6a5af9';
+        let ctx;
+        
+        // Initialisation quand la page est chargée
+        document.addEventListener('DOMContentLoaded', function() {
+            // Créer des particules de fond
+            createParticles();
+            
+            // Initialisation du canvas
+            const canvas = document.getElementById('gameCanvas');
+            ctx = canvas.getContext('2d');
+            resetCanvas();
+            
+            // Éléments DOM
+            const codeBlocks = document.querySelectorAll('.code-block');
+            const droppableArea = document.getElementById('droppableArea');
+            const outputText = document.getElementById('outputText');
+            const animationArea = document.getElementById('animationArea');
+            const runButton = document.getElementById('runButton');
+            const resetButton = document.getElementById('resetButton');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navMenu = document.getElementById('navMenu');
+            const achievementNotification = document.getElementById('achievementNotification');
+            const achievementText = document.getElementById('achievementText');
+            
+            // Navigation mobile
+            mobileMenuBtn.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                mobileMenuBtn.innerHTML = navMenu.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i>' 
+                    : '<i class="fas fa-bars"></i>';
+                
+                // Ajouter un effet de bounce au menu mobile
+                if (navMenu.classList.contains('active')) {
+                    navMenu.style.animation = 'slideDown 0.3s ease-out';
+                }
+            });
+            
+            // Fermer le menu mobile en cliquant sur un lien
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        navMenu.classList.remove('active');
+                        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                    
+                    // Ajouter un effet de bounce aux liens de navigation
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                    
+                    // Mettre à jour la classe active
+                    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Navigation fluide avec effet de bounce
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        // Effet de bounce sur le bouton
+                        this.style.transform = 'scale(0.9)';
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 200);
+                        
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Gestion du glisser-déposer des blocs de code avec effet de bounce
+            codeBlocks.forEach(block => {
+                block.addEventListener('dragstart', function(e) {
+                    draggedBlock = this;
+                    this.classList.add('dragging');
+                    e.dataTransfer.setData('text/plain', this.getAttribute('data-code'));
+                    
+                    // Effet de bounce au début du drag
+                    this.style.animation = 'none';
+                    this.style.transform = 'scale(0.9)';
+                });
+                
+                block.addEventListener('dragend', function() {
+                    this.classList.remove('dragging');
+                    draggedBlock = null;
+                    
+                    // Restaurer l'animation
+                    this.style.transform = '';
+                    this.style.animation = 'blockPulse 2s infinite';
+                });
+            });
+            
+            // Événements pour la zone de dépôt avec effets visuels
+            droppableArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.style.borderColor = '#6a5af9';
+                this.style.backgroundColor = 'rgba(106, 90, 249, 0.1)';
+                this.style.transform = 'scale(1.02)';
+            });
+            
+            droppableArea.addEventListener('dragleave', function() {
+                this.style.borderColor = '#555';
+                this.style.backgroundColor = 'rgba(255,255,255,0.05)';
+                this.style.transform = '';
+            });
+            
+            droppableArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.style.borderColor = '#555';
+                this.style.backgroundColor = 'rgba(255,255,255,0.05)';
+                this.style.transform = '';
+                
+                if (draggedBlock) {
+                    const code = draggedBlock.getAttribute('data-code');
+                    const text = draggedBlock.querySelector('span').textContent;
+                    const icon = draggedBlock.querySelector('i').className;
+                    addCodeToProgram(code, text, icon);
+                    
+                    // Effet de bounce sur le bloc déposé
+                    draggedBlock.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        draggedBlock.style.transform = '';
+                    }, 200);
+                }
+            });
+            
+            // Exécuter le programme avec effet de bounce
+            runButton.addEventListener('click', function() {
+                // Effet de bounce sur le bouton
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+                
+                executeProgram();
+            });
+            
+            // Réinitialiser le programme avec effet de bounce
+            resetButton.addEventListener('click', function() {
+                // Effet de bounce sur le bouton
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+                
+                programCode = [];
+                droppableArea.innerHTML = '<p style="color: #858585; text-align: center; margin: 30px 0; font-style: italic;">Dépose les blocs ici</p>';
+                outputText.innerHTML = 'Le résultat de ton programme s\'affichera ici.';
+                resetCanvas();
+                animationArea.innerHTML = '';
+                runButton.disabled = false;
+                runButton.innerHTML = '<i class="fas fa-play"></i> Exécuter le programme';
+                
+                // Effet visuel sur la zone de code
+                const codeEditor = document.getElementById('codeEditor');
+                codeEditor.style.boxShadow = '0 0 30px rgba(255, 107, 107, 0.5)';
+                setTimeout(() => {
+                    codeEditor.style.boxShadow = '';
+                }, 500);
+            });
+            
+            // Fonction pour ajouter du code au programme
+            function addCodeToProgram(code, text, icon) {
+                programCode.push(code);
+                
+                // Supprimer le message par défaut
+                if (droppableArea.querySelector('p')) {
+                    droppableArea.innerHTML = '';
+                }
+                
+                // Créer un élément visuel pour le code ajouté
+                const codeElement = document.createElement('div');
+                codeElement.className = 'code-element';
+                codeElement.innerHTML = `
+                    <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(106, 90, 249, 0.15); padding: 12px 18px; border-radius: 10px; margin-bottom: 12px; border-left: 4px solid var(--accent-color);">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <i class="${icon}" style="color: var(--primary-color); font-size: 1.3rem;"></i>
+                            <span style="color: var(--dark-color); font-weight: bold; font-size: 1.1rem;">${text}</span>
+                        </div>
+                        <button class="delete-code" style="background: #ff6b6b; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-weight: bold; transition: all 0.3s;">×</button>
+                    </div>
+                `;
+                
+                // Ajouter l'élément à la zone de dépôt
+                droppableArea.appendChild(codeElement);
+                
+                // Animation d'entrée
+                codeElement.style.opacity = '0';
+                codeElement.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    codeElement.style.transition = 'opacity 0.3s, transform 0.3s';
+                    codeElement.style.opacity = '1';
+                    codeElement.style.transform = 'translateY(0)';
+                }, 10);
+                
+                // Ajouter un événement pour supprimer le code
+                const deleteBtn = codeElement.querySelector('.delete-code');
+                deleteBtn.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.2)';
+                });
+                
+                deleteBtn.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+                
+                deleteBtn.addEventListener('click', function() {
+                    // Effet de bounce sur la suppression
+                    this.style.transform = 'scale(0.8)';
+                    
+                    const index = Array.from(droppableArea.children).indexOf(codeElement);
+                    if (index >= 0) {
+                        programCode.splice(index, 1);
+                    }
+                    
+                    // Animation de sortie
+                    codeElement.style.opacity = '0';
+                    codeElement.style.transform = 'translateX(20px)';
+                    setTimeout(() => {
+                        codeElement.remove();
+                        
+                        if (droppableArea.children.length === 0) {
+                            droppableArea.innerHTML = '<p style="color: #858585; text-align: center; margin: 30px 0; font-style: italic;">Dépose les blocs ici</p>';
+                        }
+                    }, 300);
+                });
+            }
+            
+            // Exécuter le programme
+            function executeProgram() {
+                if (programCode.length === 0) {
+                    outputText.innerHTML = "<span style='color: var(--danger-color);'><i class='fas fa-exclamation-triangle'></i> Tu n'as pas encore ajouté de code ! Déplace des blocs dans la zone de code pour créer ton programme.</span>";
+                    animationArea.innerHTML = '';
+                    
+                    // Effet de shake sur la zone de sortie
+                    outputText.parentElement.style.animation = 'shake 0.5s';
+                    setTimeout(() => {
+                        outputText.parentElement.style.animation = '';
+                    }, 500);
+                    return;
+                }
+                
+                // Réinitialiser le canvas
+                resetCanvas();
+                animationArea.innerHTML = '';
+                
+                // Exécuter chaque instruction
+                let output = "<span style='color: var(--success-color);'><i class='fas fa-check-circle'></i> Programme exécuté avec succès !</span><br><br>";
+                let hasAnimation = false;
+                
+                programCode.forEach((code, index) => {
+                    if (code.includes("dire(")) {
+                        const message = code.match(/\('([^']+)'\)/)[1];
+                        output += `<div style="margin-bottom: 8px; padding: 8px; background: rgba(76, 217, 100, 0.1); border-radius: 8px;"><i class="fas fa-comment" style="color: var(--success-color);"></i> ${message}</div>`;
+                    } 
+                    else if (code.includes("avancer(")) {
+                        const distance = parseInt(code.match(/\((\d+)\)/)[1]);
+                        avancer(distance);
+                        output += `<div style="margin-bottom: 8px; padding: 8px; background: rgba(106, 90, 249, 0.1); border-radius: 8px;"><i class="fas fa-arrow-right" style="color: var(--primary-color);"></i> Avancer de ${distance} pixels</div>`;
+                        hasAnimation = true;
+                    }
+                    else if (code.includes("tourner(")) {
+                        const angle = parseInt(code.match(/\((\d+)\)/)[1]);
+                        tourner(angle);
+                        output += `<div style="margin-bottom: 8px; padding: 8px; background: rgba(255, 154, 60, 0.1); border-radius: 8px;"><i class="fas fa-redo" style="color: var(--accent-color);"></i> Tourner de ${angle} degrés</div>`;
+                    }
+                    else if (code.includes("changerCouleur(")) {
+                        const color = code.match(/\('([^']+)'\)/)[1];
+                        changerCouleur(color);
+                        output += `<div style="margin-bottom: 8px; padding: 8px; background: rgba(214, 110, 253, 0.1); border-radius: 8px;"><i class="fas fa-palette" style="color: var(--secondary-color);"></i> Changer la couleur en ${color}</div>`;
+                    }
+                    else if (code.includes("repetir(")) {
+                        output += `<div style="margin-bottom: 8px; padding: 8px; background: rgba(255, 204, 0, 0.1); border-radius: 8px;"><i class="fas fa-sync-alt" style="color: var(--warning-color);"></i> Répéter 4 fois (bloc de code spécial)</div>`;
+                        hasAnimation = true;
+                        
+                        // Pour la répétition, on avance 4 fois
+                        for (let i = 0; i < 4; i++) {
+                            avancer(50);
+                            tourner(90);
+                        }
+                    }
+                });
+                
+                // Afficher le résultat
+                outputText.innerHTML = output;
+                
+                // Ajouter une animation si le programme en contient
+                if (hasAnimation) {
+                    createAnimation();
+                }
+                
+                // Incrémenter le compteur d'exécutions
+                executedCount++;
+                
+                // Vérifier les accomplissements
+                checkAchievements();
+                
+                // Désactiver le bouton d'exécution après quelques exécutions
+                if (executedCount >= 8) {
+                    runButton.disabled = true;
+                    runButton.innerHTML = '<i class="fas fa-check"></i> Programme terminé !';
+                    showAchievement("Bravo ! Tu as terminé tous les exercices ! Tu es maintenant un expert en programmation !");
+                }
+                
+                // Effet visuel sur la sortie
+                const outputDiv = document.getElementById('output');
+                outputDiv.style.boxShadow = 'inset 0 0 0 3px rgba(76, 217, 100, 0.3)';
+                setTimeout(() => {
+                    outputDiv.style.boxShadow = '';
+                }, 1000);
+            }
+            
+            // Fonctions pour la tortue graphique
+            function avancer(distance) {
+                const newX = turtleX + distance * Math.cos(turtleAngle * Math.PI / 180);
+                const newY = turtleY + distance * Math.sin(turtleAngle * Math.PI / 180);
+                
+                ctx.beginPath();
+                ctx.moveTo(turtleX, turtleY);
+                ctx.lineTo(newX, newY);
+                ctx.strokeStyle = turtleColor;
+                ctx.lineWidth = 4;
+                ctx.lineCap = 'round';
+                ctx.stroke();
+                
+                // Dessiner la tête de la tortue
+                ctx.beginPath();
+                ctx.arc(newX, newY, 6, 0, Math.PI * 2);
+                ctx.fillStyle = turtleColor;
+                ctx.fill();
+                
+                turtleX = newX;
+                turtleY = newY;
+            }
+            
+            function tourner(angle) {
+                turtleAngle += angle;
+                
+                // Dessiner un indicateur de direction
+                ctx.beginPath();
+                ctx.arc(turtleX, turtleY, 15, (turtleAngle - 10) * Math.PI / 180, (turtleAngle + 10) * Math.PI / 180);
+                ctx.strokeStyle = turtleColor;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+            
+            function changerCouleur(color) {
+                const colorMap = {
+                    'rouge': '#ff6b6b',
+                    'bleu': '#6a5af9',
+                    'vert': '#4cd964',
+                    'jaune': '#ffcc00',
+                    'orange': '#ff9a3c',
+                    'violet': '#d66efd',
+                    'rose': '#ff8ab3'
+                };
+                turtleColor = colorMap[color] || '#6a5af9';
+            }
+            
+            function resetCanvas() {
+                ctx.clearRect(0, 0, 500, 300);
+                ctx.fillStyle = '#f8f9ff';
+                ctx.fillRect(0, 0, 500, 300);
+                
+                // Ajouter un léger dégradé
+                const gradient = ctx.createLinearGradient(0, 0, 500, 300);
+                gradient.addColorStop(0, 'rgba(106, 90, 249, 0.05)');
+                gradient.addColorStop(1, 'rgba(214, 110, 253, 0.05)');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, 500, 300);
+                
+                // Réinitialiser la position de la tortue
+                turtleX = 250;
+                turtleY = 150;
+                turtleAngle = 0;
+                turtleColor = '#6a5af9';
+                
+                // Dessiner la tortue initiale
+                ctx.beginPath();
+                ctx.arc(turtleX, turtleY, 10, 0, Math.PI * 2);
+                ctx.fillStyle = '#6a5af9';
+                ctx.fill();
+                
+                // Dessiner les yeux de la tortue
+                ctx.beginPath();
+                ctx.arc(turtleX + 4, turtleY - 4, 2, 0, Math.PI * 2);
+                ctx.fillStyle = 'white';
+                ctx.fill();
+                
+                // Dessiner la direction de la tortue
+                ctx.beginPath();
+                ctx.moveTo(turtleX, turtleY);
+                ctx.lineTo(turtleX + 25, turtleY);
+                ctx.strokeStyle = '#6a5af9';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+            }
+            
+            // Créer une animation dans la zone d'animation
+            function createAnimation() {
+                const shapes = ['🔵', '🟢', '🔴', '🟡', '🟣', '🟠'];
+                const emojis = ['😊', '🤖', '🐱', '🐉', '🚀', '⭐', '🎨', '💻'];
+                
+                for (let i = 0; i < 15; i++) {
+                    const shape = document.createElement('span');
+                    const shapeType = Math.random() > 0.5 ? shapes : emojis;
+                    shape.textContent = shapeType[Math.floor(Math.random() * shapeType.length)];
+                    shape.style.fontSize = `${Math.random() * 30 + 25}px`;
+                    shape.style.position = 'relative';
+                    shape.style.left = `${Math.random() * 100}px`;
+                    shape.style.top = `${Math.random() * 10}px`;
+                    shape.style.animation = `float ${2 + Math.random() * 3}s ease-in-out ${i * 0.1}s infinite`;
+                    shape.style.cursor = 'pointer';
+                    shape.style.transition = 'transform 0.3s';
+                    shape.style.zIndex = '1';
+                    
+                    shape.addEventListener('mouseenter', function() {
+                        this.style.transform = 'scale(1.5) rotate(10deg)';
+                        this.style.zIndex = '2';
+                    });
+                    
+                    shape.addEventListener('mouseleave', function() {
+                        this.style.transform = 'scale(1) rotate(0deg)';
+                        this.style.zIndex = '1';
+                    });
+                    
+                    shape.addEventListener('click', function() {
+                        this.style.transform = 'scale(2) rotate(20deg)';
+                        this.style.opacity = '0.5';
+                        setTimeout(() => {
+                            this.style.transform = 'scale(1) rotate(0deg)';
+                            this.style.opacity = '1';
+                        }, 300);
+                        
+                        // Jouer un son fictif (en commentaire car pas d'audio réel)
+                        // const audio = new Audio('click.mp3');
+                        // audio.play();
+                    });
+                    
+                    animationArea.appendChild(shape);
+                }
+            }
+            
+            // Vérifier les accomplissements
+            function checkAchievements() {
+                if (executedCount === 1) {
+                    unlockBadge('badge1', 'Premier programme', 'Tu as créé ton premier programme !');
+                }
+                else if (executedCount === 3) {
+                    unlockBadge('badge2', 'Dessin géométrique', 'Tu as créé un dessin avec ton code !');
+                }
+                else if (executedCount === 5) {
+                    unlockBadge('badge3', 'Maître des boucles', 'Tu maîtrises les répétitions !');
+                }
+                else if (executedCount === 7) {
+                    unlockBadge('badge4', 'Animation réussie', 'Tu as créé une animation amusante !');
+                }
+            }
+            
+            // Débloquer un badge avec effet de bounce
+            function unlockBadge(badgeId, badgeName, achievementMessage) {
+                const badge = document.getElementById(badgeId);
+                if (badge && badge.classList.contains('locked')) {
+                    badge.classList.remove('locked');
+                    badge.classList.add('unlocked');
+                    
+                    // Effet spécial sur le badge
+                    badge.style.animation = 'badgeHover 1s ease 3, pulse 0.5s ease 3';
+                    badge.style.transform = 'scale(1.3)';
+                    
+                    setTimeout(() => {
+                        badge.style.transform = '';
+                        badge.style.animation = 'badgeSpin 20s linear infinite';
+                    }, 3000);
+                    
+                    // Afficher la notification
+                    showAchievement(achievementMessage);
+                }
+            }
+            
+            // Afficher une notification d'accomplissement
+            function showAchievement(message) {
+                achievementText.textContent = message;
+                achievementNotification.style.display = 'block';
+                
+                // Ajouter un effet sonore fictif (en commentaire)
+                // const audio = new Audio('achievement.mp3');
+                // audio.play();
+                
+                setTimeout(() => {
+                    achievementNotification.style.display = 'none';
+                }, 4000);
+            }
+            
+            // Créer des particules de fond
+            function createParticles() {
+                const particlesContainer = document.getElementById('particles');
+                const colors = ['#6a5af9', '#d66efd', '#ff9a3c', '#4cd964', '#ffcc00'];
+                
+                for (let i = 0; i < 40; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    
+                    // Taille aléatoire
+                    const size = Math.random() * 10 + 5;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    
+                    // Position aléatoire
+                    particle.style.left = `${Math.random() * 100}%`;
+                    particle.style.top = `${Math.random() * 100}%`;
+                    
+                    // Couleur aléatoire
+                    particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    // Animation avec durée aléatoire
+                    const duration = Math.random() * 20 + 10;
+                    particle.style.animationDuration = `${duration}s`;
+                    
+                    // Délai d'animation aléatoire
+                    particle.style.animationDelay = `${Math.random() * 5}s`;
+                    
+                    particlesContainer.appendChild(particle);
+                }
+            }
+            
+            // Animation des éléments au défilement
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        
+                        // Ajouter un effet de bounce sur certaines cartes
+                        if (entry.target.classList.contains('feature-card') || 
+                            entry.target.classList.contains('character-card')) {
+                            entry.target.style.animation = 'cardFloat 3s ease-in-out infinite';
+                        }
+                    }
+                });
+            }, observerOptions);
+            
+            // Observer les cartes de fonctionnalités et de personnages
+            document.querySelectorAll('.feature-card, .character-card, .badge').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+            
+            // Animation supplémentaire pour le titre de section
+            document.querySelectorAll('.section-title').forEach(title => {
+                title.style.opacity = '0';
+                title.style.transform = 'translateY(-20px)';
+                title.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(title);
+            });
+            
+            // Animation pour les instructions
+            const instructions = document.querySelector('.instructions');
+            if (instructions) {
+                instructions.style.opacity = '0';
+                instructions.style.transform = 'translateX(-20px)';
+                instructions.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(instructions);
+            }
+        });
+        
+        // Ajouter l'animation shake manquante
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
